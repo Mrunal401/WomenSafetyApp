@@ -1,14 +1,5 @@
 package com.example.womensafety.Activities;
 
-import android.app.ActionBar;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.*;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
@@ -17,7 +8,16 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.example.womensafety.Detail_Forms;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.womensafety.User.Detail_Forms;
 import com.example.womensafety.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -48,9 +48,6 @@ public class ManageActivity extends AppCompatActivity {
     TextView etEmail;
     TextView etAge;
     TextView etMobile;
-    TextView etCountry;
-    TextView etState;
-    TextView etCity;
     View hView;
     Button btnChangePass;
     Button btnChangeVerificationCode;
@@ -61,7 +58,6 @@ public class ManageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_manage);
         auth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -74,14 +70,12 @@ public class ManageActivity extends AppCompatActivity {
         Username=hView.findViewById(R.id.header_username);
         String user=getIntent().getStringExtra("use");
         Username.setText(user);
+
         etUserName= (TextView)findViewById(R.id.etUserName);
         etFullName = (TextView)findViewById(R.id.etFullName);
         etEmail= (TextView)findViewById(R.id.etEmail);
         etAge= (TextView)findViewById(R.id.etAge);
         etMobile= (TextView)findViewById(R.id.etMobile);
-        etCountry= (TextView)findViewById(R.id.etCountry);
-        etState= (TextView)findViewById(R.id.etState);
-        etCity= (TextView)findViewById(R.id.etCity);
         btnChangePass=(Button)findViewById(R.id.btnChangePass);
         btnChangeVerificationCode=(Button)findViewById(R.id.btnChangeVerificationCode);
 
@@ -93,9 +87,6 @@ public class ManageActivity extends AppCompatActivity {
                 String email= Objects.requireNonNull(snapshot.child(cud).child("mEmail_id").getValue()).toString();
                 String age= Objects.requireNonNull(snapshot.child(cud).child("mAge").getValue()).toString();
                 String mobile= Objects.requireNonNull(snapshot.child(cud).child("mMobile_number").getValue()).toString();
-                String country= Objects.requireNonNull(snapshot.child(cud).child("country").getValue()).toString();
-                String state= Objects.requireNonNull(snapshot.child(cud).child("state").getValue()).toString();
-                String city= Objects.requireNonNull(snapshot.child(cud).child("city").getValue()).toString();
                 password= Objects.requireNonNull(snapshot.child(cud).child("mPassword").getValue()).toString();
                 verificationCode= Objects.requireNonNull(snapshot.child(cud).child("mUVC").getValue()).toString();
                 etUserName.setText(name);
@@ -103,9 +94,6 @@ public class ManageActivity extends AppCompatActivity {
                 etEmail.setText(email);
                 etAge.setText(age);
                 etMobile.setText(mobile);
-                etCountry.setText(country);
-                etState.setText(state);
-                etCity.setText(city);
             }
 
             @Override
@@ -216,6 +204,8 @@ public class ManageActivity extends AppCompatActivity {
                 });
                 alertDialog.show();
             }
+
+
         });
 
 
@@ -278,6 +268,5 @@ public class ManageActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.black));
         actionBarDrawerToggle.syncState();
-
     }
 }

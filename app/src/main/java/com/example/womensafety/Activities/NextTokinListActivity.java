@@ -1,7 +1,6 @@
 package com.example.womensafety.Activities;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -9,24 +8,19 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.womensafety.Adapters.kinAdapter;
-import com.example.womensafety.Detail_Forms;
+import com.example.womensafety.User.Detail_Forms;
 import com.example.womensafety.Models.kin_registered;
 import com.example.womensafety.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -95,6 +89,10 @@ public class NextTokinListActivity extends AppCompatActivity {
                         startActivity(new Intent(NextTokinListActivity.this, AboutUsActivity.class));
                         break;
 
+                    case R.id.nav_settings:
+                        startActivity(new Intent(NextTokinListActivity.this, SettingsActivity.class));
+                        break;
+
 /*                    case R.id.nav_travelLog:
                         startActivity(new Intent(NextTokinListActivity.this, TravelLog.class));
                         break;*/
@@ -145,7 +143,8 @@ public class NextTokinListActivity extends AppCompatActivity {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            /*super.onBackPressed();*/
+            startActivity(new Intent(getApplicationContext(),AdminActivity.class));
         }
     }
 

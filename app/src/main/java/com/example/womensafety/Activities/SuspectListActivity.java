@@ -12,14 +12,11 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.womensafety.Adapters.kinAdapter;
 import com.example.womensafety.Adapters.suspectAdapter;
-import com.example.womensafety.Detail_Forms;
-import com.example.womensafety.Models.kin_registered;
+import com.example.womensafety.User.Detail_Forms;
 import com.example.womensafety.Models.suspect_registered;
 import com.example.womensafety.R;
 import com.google.android.material.navigation.NavigationView;
@@ -29,8 +26,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -66,10 +61,10 @@ public class SuspectListActivity extends AppCompatActivity {
 
         setUpToolbar();
         navigationView = findViewById(R.id.navigationMenu);
-        hView=navigationView.getHeaderView(0);
+/*        hView=navigationView.getHeaderView(0);
         Username=hView.findViewById(R.id.header_username);
         String user=getIntent().getStringExtra("use");
-        Username.setText(user);
+        Username.setText(user);*/
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -92,6 +87,10 @@ public class SuspectListActivity extends AppCompatActivity {
 
                     case R.id.nav_aboutUs:
                         startActivity(new Intent(SuspectListActivity.this, AboutUsActivity.class));
+                        break;
+
+                    case R.id.nav_settings:
+                        startActivity(new Intent(SuspectListActivity.this, SettingsActivity.class));
                         break;
 
 /*
@@ -121,9 +120,11 @@ public class SuspectListActivity extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot susSnap : snapshot.getChildren()) {
-                    suspect_registered suspectRegistered = susSnap.getValue(suspect_registered.class);
-                    sus.add(suspectRegistered);
+                for (DataSnapshot susDesSnap : snapshot.getChildren()) {
+                    for (DataSnapshot susSnap : susDesSnap.getChildren()) {
+                        suspect_registered suspectRegistered = susSnap.getValue(suspect_registered.class);
+                        sus.add(suspectRegistered);
+                    }
                 }
 
                 suspectAdapter adapter = new suspectAdapter(SuspectListActivity.this, 0, sus);
